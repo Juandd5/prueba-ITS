@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Gender</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Profile</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in latest_user_list %}
+                <tr>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.age }}</td>
+                    <td><a href="{% url 'users:detail' user.id %}">link{{ user.id }}</a></td>
+                </tr>
+        {% empty %}
+        <p>No users</p>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

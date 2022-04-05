@@ -18,7 +18,7 @@ def get_user(params={}):
         results = response.get('results')[0]
         context = {
             'gender': results.get('gender'),
-            'full_name': results.get('name').get('first') + '' + results.get('name').get('last'),
+            'full_name': results.get('name').get('first') + ' ' + results.get('name').get('last'),
             'email': results.get('email'),
             'age': results.get('dob').get('age'),
             'city': results.get('location').get('city'),
@@ -34,9 +34,8 @@ def create_user():
     number_of_users = User.objects.all().count()
 
     if number_of_users < 100:
-        results = get_user()
-
-        for _ in range(98):
+        for _ in range(100):
+            results = get_user()
             User.objects.create(
                 gender = results['gender'],
                 full_name = results['full_name'],
@@ -45,4 +44,4 @@ def create_user():
                 city = results['city'],
                 country = results['country'],
                 picture = results['picture']
-            )
+            )     

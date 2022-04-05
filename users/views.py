@@ -1,18 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http.response import JsonResponse
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from . import services
 from .models import User
 
 
-def list_users(request):
+class UserListView(ListView):
     services.create_user()
-    user_list = list(User.objects.values())
+    template_name = "users/user_list.html"
+    context_object_name = "latest_user_list"
+    
+    def get_queryset(self):
+        return User.objects.order_by('-age')[:10]
 
-    if user_list:
-        data = {
-            'Users': user_list
-        }
-        return JsonResponse(data, status=200)
-    return HttpResponse('Not found', status=404)
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = "users/user_detail.html"
